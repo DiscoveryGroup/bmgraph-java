@@ -1,0 +1,9 @@
+bmgraph-java, a Java library for reading and writing graphs in the BMGraph
+graph format
+
+bmgraph-java also includes tools to export BMGraphs to other formats.
+
+This is the initial public version of bmgraph-java.  Build instructions and
+instructions for contributors will be provided soon.
+
+For copyright or license information, see COPYRIGHT and LICENSE files.

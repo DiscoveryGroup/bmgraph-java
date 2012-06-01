@@ -1,0 +1,72 @@
+<project name="bmgraph-java"
+         default="dist"
+         xmlns:ac="bmgraph-java:antlib:net.sf.antcontrib">
+
+    <!--
+      This project depends on other projects. Please consult section
+      Dependencies below and make sure to set any environment variables and/or
+      properties documented there.
+     -->
+
+    <description>
+        BMGraph parsing tools in Java.
+    </description>
+
+    <property environment="env"/>
+    <property name="lib.dir" location="lib"/>
+
+    <!-- Ant Contrib (ac:) tasks-->
+    <taskdef uri="${ant.project.name}:antlib:net.sf.antcontrib"
+             resource="net/sf/antcontrib/antcontrib.properties"
+             classpath="${lib.dir}/ext/ant-contrib/ant-contrib.jar"/>
+
+    <property name="project.title" value="BMGraph Java"/>
+    <property name="project.name" value="bmgraph-java"/>
+	
+    <property name="doc.packages" value="biomine.bmgraph.*"/>
+
+    <!-- - - - - - - - -
+         Dependencies:
+      - - - - - - - - -->
+
+    <!--
+      BIOMINE_JAVA_BUILD_ROOT
+       - dependencies are by default looked for on the path specified by this
+         environment variable (e.g. "BIOMINE_JAVA_BUILD_ROOT/biomine-module")
+       - default: ".."
+     -->
+    <ac:if>
+        <isset property="env.BIOMINE_JAVA_BUILD_ROOT"/>
+        <then>
+            <property name="biomine.build.dir"
+                      location="${env.BIOMINE_JAVA_BUILD_ROOT}"/>
+        </then>
+    </ac:if>
+    <property name="biomine.build.dir" location=".."/>
+
+    <!--
+      Biomine Ant:
+       - default: "BIOMINE_JAVA_BUILD_ROOT/biomine-ant"
+       - point environment variable "BIOMINE_ANT_ROOT"
+         or Ant property "biomine-ant.dir" to the module directory
+      -->
+    <ac:if>
+        <isset property="env.BIOMINE_ANT_ROOT"/>
+        <then>
+            <property name="biomine-ant.dir"
+                      location="${env.BIOMINE_ANT_ROOT}"/>
+        </then>
+    </ac:if>
+    <property name="biomine-ant.dir"
+              location="${biomine.build.dir}/biomine-ant"/>
+    <property name="biomine-ant.imports.dir"
+              location="${biomine-ant.dir}/imports"/>
+
+    <import file="${biomine-ant.imports.dir}/java-deps-properties.xml"/>
+    <import file="${biomine-ant.imports.dir}/java-deps-targets.xml"/>
+
+    <!-- - - - - -
+         Targets:
+      - - - - - - -->
+	
+</project>
