@@ -1,3 +1,23 @@
+/*
+ * Copyright 2012 University of Helsinki.
+ * 
+ * This file is part of bmgraph-java.
+ *
+ * bmgraph-java is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version.
+ * 
+ * bmgraph-java is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with bmgraph-java.  If not, see
+ * <http://www.gnu.org/licenses/>.
+ */
+
 package biomine.bmgraph.read;
 
 import biomine.bmgraph.BMEntity;
@@ -155,6 +175,7 @@ public class BMGraphToken extends BMEntity {
      * space tokens it is the token type.
      * @return A string describing the token.
      */
+    @Override
     public String toString () {
         if (type.isSpace())
             return type.toString();
@@ -267,6 +288,7 @@ public class BMGraphToken extends BMEntity {
      * @param value Value to set the key to.
      * @return Previous value of the key, or null if none.
      */
+    @Override
     public String put (String key, String value) {
         if (attributes == null)
             attributes = new HashMap<String, String>(8, 0.9f);
@@ -278,6 +300,7 @@ public class BMGraphToken extends BMEntity {
      * @param key Key to remove.
      * @return Previous value of the key that was just removed.
      */
+    @Override
     public String remove (String key) {
         if (attributes == null)
             return null;

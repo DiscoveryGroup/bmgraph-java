@@ -1,7 +1,26 @@
+/*
+ * Copyright 2012 University of Helsinki.
+ * 
+ * This file is part of bmgraph-java.
+ *
+ * bmgraph-java is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version.
+ * 
+ * bmgraph-java is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with bmgraph-java.  If not, see
+ * <http://www.gnu.org/licenses/>.
+ */
+
 package biomine.bmgraph;
 
 import biomine.bmgraph.read.BMGraphToken;
-
 import java.text.ParseException;
 import java.util.HashMap;
 
@@ -81,6 +100,7 @@ public class BMNode extends BMEntity implements Comparable<BMNode> {
      * Clone this node and any attributes map it may have.
      * @return A clone of this node.
      */
+    @Override
     public BMNode clone () {
         BMNode clone = new BMNode(type, dbid);
         if (attributes != null)
@@ -127,6 +147,7 @@ public class BMNode extends BMEntity implements Comparable<BMNode> {
      * Convert the node to a string of format "Type_id".
      * @return Node type and id as a string.
      */
+    @Override
     public String toString () {
         return type+"_"+dbid;
     }
@@ -145,6 +166,7 @@ public class BMNode extends BMEntity implements Comparable<BMNode> {
         return (type.equals(other.getType()) && dbid.equals(other.getId()));
     }
 
+    @Override
     public boolean equals (Object other) {
         if (other instanceof BMNode)
             return this.equals((BMNode)other);
@@ -160,6 +182,7 @@ public class BMNode extends BMEntity implements Comparable<BMNode> {
      * respectively, according to their lexicographical order based on
      * type and id.
      */
+    @Override
     public int compareTo (BMNode other) {
         if (other == this)
             return 0;
@@ -175,6 +198,7 @@ public class BMNode extends BMEntity implements Comparable<BMNode> {
      * Obtain the hashcode for this node, based on type and id only.
      * @return The hashcode.
      */
+    @Override
     public int hashCode () {
         return hashCode;
     }

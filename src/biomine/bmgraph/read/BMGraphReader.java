@@ -1,3 +1,23 @@
+/*
+ * Copyright 2012 University of Helsinki.
+ * 
+ * This file is part of bmgraph-java.
+ *
+ * bmgraph-java is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version.
+ * 
+ * bmgraph-java is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with bmgraph-java.  If not, see
+ * <http://www.gnu.org/licenses/>.
+ */
+
 package biomine.bmgraph.read;
 
 import biomine.bmgraph.BMEdge;
@@ -61,12 +81,14 @@ public class BMGraphReader {
             this.stream = stream;
         }
 
+        @Override
         public void readerError (String message, String file,
                                  int line, int column) {
             stream.print("Error:");
             stream.println(file+":"+line+":"+column+":"+message);
         }
 
+        @Override
         public void readerWarning (String message, String file,
                                  int line, int column) {
             stream.print("Warning:");
@@ -169,6 +191,7 @@ public class BMGraphReader {
                 this.callback = callback;
         }
 
+        @Override
         public boolean parserError (String message, String file,
                                     int line, int column) {
             callback.readerError(message, file, line, column);
@@ -190,6 +213,7 @@ public class BMGraphReader {
                           token.getLine(), token.getColumn());
         }
 
+        @Override
         public boolean parsedSpecialNode (BMGraphToken node) {
             BMNode n = new BMNode(node);
 
@@ -202,6 +226,7 @@ public class BMGraphReader {
             return true;
         }
 
+        @Override
         public boolean parsedEdge (BMGraphToken from, BMGraphToken to,
                                    BMGraphToken linktype,
                                    HashMap<String, String> attributes,
@@ -254,6 +279,7 @@ public class BMGraphReader {
             return true;
         }
 
+        @Override
         public boolean parsedNodeAttributes (BMGraphToken node,
                                              HashMap<String, String> attributes) {
             BMNode n = new BMNode(node);
@@ -275,6 +301,7 @@ public class BMGraphReader {
             return true;
         }
 
+        @Override
         public boolean parsedNodeGroup (BMGraphToken group,
                                         LinkedList<BMGraphToken> members) {
             BMNode groupnode;
@@ -313,6 +340,7 @@ public class BMGraphReader {
             return true;
         }
 
+        @Override
         public boolean parsedReverseLinktype (BMGraphToken forward,
                                               BMGraphToken reverse) {
             String f, r;
@@ -331,6 +359,7 @@ public class BMGraphReader {
             return true;
         }
 
+        @Override
         public boolean parsedSymmetricLinktype (BMGraphToken symmetric) {
             String s = symmetric.getImage();
             if (graph.numEdges() > 0) {
@@ -342,6 +371,7 @@ public class BMGraphReader {
             return true;
         }
 
+        @Override
         public boolean parsedDatabase (BMGraphToken database,
                                        BMGraphToken version,
                                        BMGraphToken server,
@@ -371,6 +401,7 @@ public class BMGraphReader {
             return true;
         }
 
+        @Override
         public boolean parsedNodeExpandURL (BMGraphToken urlPart) {
             try {
                 URL temp = new URL(urlPart.toString());
@@ -381,6 +412,7 @@ public class BMGraphReader {
             return true;
         }
 
+        @Override
         public boolean parsedNodeExpandProgram (BMGraphToken program) {
             if (program.toString().length() < 2)
                 parserWarning("Curiously short node expand program name", program);
@@ -389,6 +421,7 @@ public class BMGraphReader {
             return true;
         }
 
+        @Override
         public boolean parsedSpecialComment (BMGraphToken comment, String content) {            
 
             //graph.addComment("_"+comment+content);
@@ -397,6 +430,7 @@ public class BMGraphReader {
             return true;
         }
 
+        @Override
         public boolean parsedComment (BMGraphToken comment) {
             graph.addComment(comment.getImage());
             return true;

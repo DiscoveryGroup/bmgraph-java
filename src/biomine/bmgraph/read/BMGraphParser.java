@@ -1,7 +1,26 @@
+/*
+ * Copyright 2012 University of Helsinki.
+ * 
+ * This file is part of bmgraph-java.
+ *
+ * bmgraph-java is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version.
+ * 
+ * bmgraph-java is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with bmgraph-java.  If not, see
+ * <http://www.gnu.org/licenses/>.
+ */
+
 package biomine.bmgraph.read;
 
 import biomine.bmgraph.attributes.StringParser;
-
 import java.util.List;
 import java.util.LinkedList;
 import java.util.Map;
@@ -850,6 +869,7 @@ public class BMGraphParser implements BMGraphLexer.ErrorCallback {
      * parsed to stdout and errors to stderr.
      */
     private static class TestCallback implements ParserCallback {
+        @Override
         public boolean parserError (String message, String file,
                                     int line, int column)
         {
@@ -860,12 +880,14 @@ public class BMGraphParser implements BMGraphLexer.ErrorCallback {
             return true;
         }
 
+        @Override
         public boolean parsedSpecialNode (BMGraphToken node) {
             System.out.println(node.toString());
             return true;
         }
                                                                                    
 
+        @Override
         public boolean parsedEdge (BMGraphToken from, BMGraphToken to,
                                    BMGraphToken linktype,
                                    HashMap<String, String> attributes,
@@ -876,28 +898,33 @@ public class BMGraphParser implements BMGraphLexer.ErrorCallback {
             return true;
         }
 
+        @Override
         public boolean parsedNodeAttributes (BMGraphToken node,
                                              HashMap<String, String> attributes) {
             System.out.println("# "+node+" attributes: "+attributes);
             return true;
         }
 
+        @Override
         public boolean parsedNodeGroup (BMGraphToken groupnode,
                                         LinkedList<BMGraphToken> members) {
             System.out.println("# Group "+groupnode+" members: "+members);
             return true;
         }
 
+        @Override
         public boolean parsedReverseLinktype (BMGraphToken forward,
                                               BMGraphToken reverse) {
             System.out.println("# Linktype: "+forward+" <-> "+reverse);
             return true;
         }
 
+        @Override
         public boolean parsedSymmetricLinktype (BMGraphToken symmetric) {
             return parsedReverseLinktype(symmetric, symmetric);
         }
 
+        @Override
         public boolean parsedDatabase (BMGraphToken database,
                                        BMGraphToken version,
                                        BMGraphToken server,
@@ -914,21 +941,25 @@ public class BMGraphParser implements BMGraphLexer.ErrorCallback {
             return true;
         }
 
+        @Override
         public boolean parsedNodeExpandURL (BMGraphToken urlPart) {
             System.out.println("# Node expand url: " + urlPart);
             return true;
         }
 
+        @Override
         public boolean parsedNodeExpandProgram (BMGraphToken program) {
             System.out.println("# Node expand program: " + program);
             return true;
         }
 
+        @Override
         public boolean parsedSpecialComment (BMGraphToken comment, String content) {
             System.out.println("# _"+comment+content);
             return true;
         }
 
+        @Override
         public boolean parsedComment (BMGraphToken comment) {
             System.out.println("# _"+comment);
             return true;

@@ -1,3 +1,23 @@
+/*
+ * Copyright 2012 University of Helsinki.
+ * 
+ * This file is part of bmgraph-java.
+ *
+ * bmgraph-java is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version.
+ * 
+ * bmgraph-java is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with bmgraph-java.  If not, see
+ * <http://www.gnu.org/licenses/>.
+ */
+
 package biomine.bmgraph.write;
 
 import biomine.bmgraph.BMEdge;
@@ -48,6 +68,7 @@ public class BeeFWriter extends GraphMLWriter {
      * @param text Text to escape.
      * @return The escaped text.
      */
+    @Override
     protected String escapeText (String text) {
         text = text.replace("\\", "\\\\'");
         text = text.replace("'", "\\'");
@@ -64,6 +85,7 @@ public class BeeFWriter extends GraphMLWriter {
      * @param attribute Attribute id (not the actual name!).
      * @param value Attribute value.
      */
+    @Override
     protected void printAttribute(String attribute, String value) {
         if (attribute == null || value == null)
             return;
@@ -165,6 +187,7 @@ public class BeeFWriter extends GraphMLWriter {
      * @param node The node to print.
      * @param nodeId The id of the node in the output.
      */
+    @Override
     protected void printNode (BMNode node, String nodeId) {
         stream.println("node( "+graphId+", "+nodeId+" ).");
         printNodeAttribute(nodeId, "dbid", node.getId());
@@ -188,6 +211,7 @@ public class BeeFWriter extends GraphMLWriter {
      * Print the given BMNode to the output, along with its attributes.
      * @param node The node to print.
      */
+    @Override
     protected void printNode (BMNode node) {
         String nodeId = nodeIds.get(node);
         assert nodeId != null : "Tried to print unknown node!";
@@ -241,6 +265,7 @@ public class BeeFWriter extends GraphMLWriter {
         }
     }
 
+    @Override
     protected void writeGraph (Collection<BMNode> nodes,
                                Collection<BMEdge> edges,
                                Collection<String> comments,

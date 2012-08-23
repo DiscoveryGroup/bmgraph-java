@@ -1,3 +1,23 @@
+/*
+ * Copyright 2012 University of Helsinki.
+ * 
+ * This file is part of bmgraph-java.
+ *
+ * bmgraph-java is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version.
+ * 
+ * bmgraph-java is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with bmgraph-java.  If not, see
+ * <http://www.gnu.org/licenses/>.
+ */
+
 package biomine.bmgraph;
 
 import java.util.HashMap;
@@ -217,6 +237,7 @@ public class BMEdge extends BMEntity implements Comparable<BMEdge> {
      * Clone this edge. Any attributes map will also be cloned.
      * @return A clone of this edge.
      */
+    @Override
     public BMEdge clone () {
         return cloneWith(this.from, this.to);
     }
@@ -247,6 +268,7 @@ public class BMEdge extends BMEntity implements Comparable<BMEdge> {
                && linktype.equals(other.getLinktype());
     }
 
+    @Override
     public boolean equals (Object other) {
         if (other instanceof BMEdge)
             return this.equals((BMEdge) other);
@@ -259,6 +281,7 @@ public class BMEdge extends BMEntity implements Comparable<BMEdge> {
      * order. (As long as all edges are created in the canonical
      * direction for each linktype.)
      */
+    @Override
     public int compareTo (BMEdge other) {
         if (other == this)
             return 0;
@@ -276,6 +299,7 @@ public class BMEdge extends BMEntity implements Comparable<BMEdge> {
      * Get the hashcode for this edge, based on its nodes and linktype.
      * @return The hashcode.
      */
+    @Override
     public int hashCode () {
         return hashCode;
     }
