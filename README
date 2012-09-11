@@ -8,5 +8,6 @@ by opening the provided project file.
 
 Copyright 2012 University of Helsinki.
 
-bmgraph-java is free software.  See the files COPYING and
-COPYING.LESSER for copying conditions.
+bmgraph-java is free software licensed under the GNU Lesser General
+Public License (LGPL).  See the files COPYING and COPYING.LESSER for
+copying conditions.
