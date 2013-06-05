@@ -2,10 +2,12 @@ This is bmgraph-java, a Java library for reading and writing graphs in
 the BMGraph graph format.  bmgraph-java also includes tools to export
 BMGraphs to other formats.
 
-Simple Maven build scrpit is provided. By executing
+Simple Maven build script is provided. By executing
+  mvn package
+and
   src/main/scripts/install_to_local_repository.sh
-one can install the created Maven artifact into the local repository and
-use it to build other software.
+you can install the library as a Maven artifact into the local Maven
+artifact repository and use it to build other software.
 
 Alternatively, you can build bmgraph-java within NetBeans by opening the
 provided project file.
