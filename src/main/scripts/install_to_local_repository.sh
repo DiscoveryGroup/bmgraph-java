@@ -1,8 +1,8 @@
 #!/bin/sh
 
 mvn install::install-file \
-    -Dfile=target/bmgraph-SNAPSHOT.jar \
+    -Dfile=target/bmgraph-1.0-SNAPSHOT.jar \
     -DgroupId=biomine.bmgraph \
     -DartifactId=bmgraph \
-    -Dversion=SNAPSHOT \
+    -Dversion=1.0-SNAPSHOT \
     -Dpackaging=jar
