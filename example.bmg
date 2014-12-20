@@ -1,0 +1,30 @@
+Gene_EntrezGene:4852 BiologicalProcess_GO:GO:0007187 participates_in goodness=0.57 source_db_name=EntrezGene
+Gene_EntrezGene:4852 BiologicalProcess_GO:GO:0032100 participates_in goodness=0.90 source_db_name=EntrezGene
+Gene_EntrezGene:4852 Gene_EntrezGene:51738 interacts_with goodness=0.66 source_db_name=EntrezGene
+Gene_EntrezGene:4852 MolecularFunction_GO:GO:0001664 has goodness=0.51 source_db_name=EntrezGene
+Gene_EntrezGene:4852 Protein_UniProt:P01303 codes_for goodness=0.90 source_db_name=EntrezGene 
+BiologicalProcess_GO:GO:0032100 Gene_EntrezGene:51738 -participates_in goodness=0.63 source_db_name=EntrezGene
+Gene_EntrezGene:51738 Gene_EntrezGene:58991 is_homologous_to goodness=0.70 source_db_name=HomoloGene
+Gene_EntrezGene:51738 Gene_EntrezGene:59301 is_homologous_to goodness=0.70 source_db_name=HomoloGene
+Gene_EntrezGene:51738 MolecularFunction_GO:GO:0001664 has goodness=0.45 source_db_name=EntrezGene
+Gene_EntrezGene:51738 MolecularFunction_GO:GO:0016608 has goodness=0.63 source_db_name=EntrezGene
+BiologicalProcess_GO:GO:0032100 Gene_EntrezGene:58991 -participates_in goodness=0.69 source_db_name=EntrezGene
+Gene_EntrezGene:58991 Gene_EntrezGene:59301 is_homologous_to goodness=0.70 source_db_name=HomoloGene
+MolecularFunction_GO:GO:0001664 Gene_EntrezGene:58991 -has goodness=0.45 source_db_name=EntrezGene
+Gene_EntrezGene:58991 MolecularFunction_GO:GO:0016608 has goodness=0.63 source_db_name=EntrezGene
+BiologicalProcess_GO:GO:0032100 Gene_EntrezGene:59301 -participates_in goodness=0.64 source_db_name=EntrezGene
+Gene_EntrezGene:59301 MolecularFunction_GO:GO:0001664 has goodness=0.44 source_db_name=EntrezGene
+Gene_EntrezGene:59301 MolecularFunction_GO:GO:0016608 has goodness=0.62 source_db_name=EntrezGene 
+Protein_UniProt:P01303 BiologicalProcess_GO:GO:0007187 participates_in goodness=0.53 source_db_name=SwissProt 
+BiologicalProcess_GO:GO:0032100 Protein_UniProt:P01303 -participates_in goodness=0.81 source_db_name=SwissProt
+
+# _attributes BiologicalProcess_GO:GO:0007187 label=G-protein+signaling,+c. PrimaryName=G-protein+signaling,+coupled+to+cyclic+nucleotide+second+messenger degree=82
+# _attributes BiologicalProcess_GO:GO:0032100 label=appetite+stimulation PrimaryName=positive+regulation+of+appetite degree=35 queryset=start
+# _attributes Gene_EntrezGene:4852 label=NPY PrimaryName=neuropeptide+Y degree=291 organism=hsa organismId=9606 queryset=start
+# _attributes Gene_EntrezGene:51738 label=GHRL PrimaryName=ghrelin/obestatin+prepropeptide degree=606 organism=hsa organismId=9606
+# _attributes Gene_EntrezGene:58991 label=Ghrl PrimaryName=ghrelin degree=181 organism=mmu organismId=10090
+# _attributes Gene_EntrezGene:59301 label=Ghrl PrimaryName=ghrelin/obestatin+prepropeptide degree=217 organism=rno organismId=10116
+# _attributes MolecularFunction_GO:GO:0001664 label=G-protein-coupled+r. PrimaryName=G-protein-coupled+receptor+binding degree=197
+# _attributes MolecularFunction_GO:GO:0016608 label=GHRF+activity PrimaryName=growth+hormone-releasing+hormone+activity degree=27 
+# _attributes Protein_UniProt:P01303 label=NPY_HUMAN PrimaryName=Neuropeptide+Y degree=798 organism=hsa organismId=9606
+

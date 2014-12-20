@@ -9,7 +9,7 @@ Each BMGraph file is an ASCII compatible text file consisting of
 lines.  Each line is terminated by an UNIX-style linefeed (`\n`). The
 following types of lines are allowed:
 
-1. Special nodes (e.g. query starting nodes, terminal nodes)
+1. Nodes (e.g. query starting nodes, terminal nodes)
 2. Edges
 3. Comments (some with special meaning)
 4. Empty lines
@@ -25,10 +25,54 @@ group nodes which must not contain a colon (:) in the DBID part.  Each
 instance of the same (case-sensitive) node identifier is considered to
 refer to the same node.
 
+Node type can be arbitrary, but it is mandatory.  The following node
+types are predefined and recognized by BMVis.  BMVis uses them to
+color the nodes and automatically generate URLs to corresponding
+database records from the DBID part.
+
+- Node
+- Sequence
+- Gene
+- Protein
+- Enzyme
+- AllelicVariant
+- Article
+- HomologGroup
+- OrthologGroup
+- GO
+- BiologicalProcess
+- MolecularFunction
+- CellularComponent
+- Ligand
+- Substance
+- Compound
+- Drug
+- Glycan
+- GenomicContext
+- Locus
+- Phenotype
+- Gene/Phenotype
+- Family
+- Region
+- Domain
+- Repeat
+- Site
+- ActiveSite
+- BindingSite
+- PostTranslationalModification
+- Pathway
+- Tissue
+- MeSHHeading
+- OMIM
+
+(Specific colors for these node types can be found from the BMVis Java
+source file `ColorPalette.java`.  URL link generation logic is in
+`DatabaseLinks.java`.)
+
 Nodes can also have attributes given in special comments as key-value
 pairs. See under Special comments and Attributes for details.
 
-### Special Nodes
+## Special Nodes
 
 Special nodes, such as query starting and terminal nodes, are placed
 at the top of the BMGraph file (before any edges). Such nodes are
@@ -123,17 +167,19 @@ utilities may support their own for any purpose.
 
 ### Node Attributes
 
+A line like this:
+
     # _attributes Type_DBID key=value ...
 
-Node attributes for the node `Type_DBID` (which must already have
-appeared in the BMGraph file, either as a special node or as part of
-an edge).  Attributes are given as key-value pairs separated by
-spaces. A node is not required to have any attributes, in which case
-it also need not have an `_attributes` line. A single node may have
-any number of `_attributes` lines.  If a single attribute key appears
-multiple times, the last seen takes effect. Otherwise all new lines
-for a single node simply add new keys on top of the existing
-attributes.
+specifies node attributes for the node `Type_DBID`.  The specified
+node must already have appeared in the BMGraph file, either as a
+special node or as part of an edge.  Attributes are given as key-value
+pairs separated by spaces. A node is not required to have any
+attributes, in which case it also need not have an `_attributes`
+line. A single node may have any number of `_attributes` lines.  If a
+single attribute key appears multiple times, the last seen takes
+effect. Otherwise all new lines for a single node simply add new keys
+on top of the existing attributes.
 
 An example of node attributes:
 
@@ -154,9 +200,40 @@ symmetric (i.e. its reverse is the same as the forward).
 BMGraph file!
 
 Linknames thus defined add on top of the built-in linknames, which
-consist of the few most common linknames in the Biomine database. This
-is required for historical compatibility with existing graphs. The
-built-in linknames may be overridden by these comments.
+consist of the few most common linknames in the Biomine database.  The
+built-in linknames with reverse linknames are:
+
+<table>
+<tr><th>Forward</th><th>Reverse</th></tr>
+<tr><td><tt>refers_to</tt></td><td><tt>referred_by</tt></td></tr>
+<tr><td><tt>codes_for</tt></td><td><tt>coded_by</tt></td></tr>
+<tr><td><tt>has_child</tt></td><td><tt>has_parent</tt></td></tr>
+<tr><td><tt>contains</tt></td><td><tt>contained_by</tt></td></tr>
+<tr><td><tt>affects</tt></td><td><tt>affected_by</tt></td></tr>
+<tr><td><tt>belongs_to</tt></td><td><tt>has_member</tt></td></tr>
+<tr><td><tt>has_child</tt></td><td><tt>has_parent</tt></td></tr>
+<tr><td><tt>has_variant</tt></td><td><tt>is_variant_of</tt></td></tr>
+<tr><td><tt>has_function</tt></td><td><tt>is_function_of</tt></td></tr>
+<tr><td><tt>subsumes</tt></td><td><tt>subsumed_by</tt></td></tr>
+<tr><td><tt>targets</tt></td><td><tt>targeted_by</tt></td></tr>
+<tr><td><tt>is_located_in</tt></td><td><tt>is_location_of</tt></td></tr>
+<tr><td><tt>is_part_of</tt></td><td><tt>has_part</tt></td></tr>
+<tr><td><tt>participates_in</tt></td><td><tt>has_participant</tt></td></tr>
+<tr><td><tt>resolves_to</tt></td><td><tt>resolved_from</tt></td></tr>
+<tr><td><tt>has_name</tt></td><td><tt>names</tt></td></tr>
+</table>
+
+The built-in symmetric linknames are:
+
+- `is_related_to`
+- `interacts_with`
+- `is_homologous_to`
+- `functionally_associated_to`
+- `has_synonym`
+- `overlaps`
+
+The built-in linknames may be overridden by `# _reverse` and `#
+_symmetric` comments.
 
 An example of how some built-in linknames might be defined:
 
@@ -194,11 +271,6 @@ of the group similarly), but in other cases special provisions need to
 be taken. When in doubt, it is recommended to ungroup all groups
 before processing.
 
-It is not recommended that new tools support this type of grouping. In
-the future BMVis should support groups defined by edges,
-e.g. `Group_g:1 Member_m:1 has_member`, which would allow easy and
-compatible group construction and destruction for visualization.
-
 ### Canvas Size
 
     # _canvas top_left_x,top_left_y,bottom_right_x,bottom_right_y
@@ -215,10 +287,6 @@ within the canvas. The intended usage is to give a starting point for
 the graph size and shape, e.g. to force a subgraph on a canvas similar
 in size to a larger graph.
 
-When using Graphviz for layout, the canvas coordinates are extracted
-from the `bb` graph attribute, and the node coordinates from `pos`
-attributes.
-
 ## Attributes
 
 Both nodes and edges can have attributes associated to them. These can
@@ -227,18 +295,21 @@ BMGraph format. Edge attributes are given on the same line as the
 edge, node attributes in special comments (due to historical reasons
 and ease of parsing).
 
-Each key must have some non-empty value if specified. Keys may consist
-of ASCII letters and numbers. Values may consist of any printable
-ASCII characters, except whitespace. Some Biomine utilities support
-spaces in values by substituting them for the plus `+` character,
-e.g. `two+words` could be visualized as "two words". There is
-currently no escape implemented to display a literal plus instead.
+Each attribute must have some non-empty value if specified.
+Attributes may consist of ASCII letters and numbers. Values may
+consist of any printable ASCII characters, except whitespace. Some
+Biomine utilities support spaces in values by substituting them for
+the plus `+` character, e.g. `two+words` could be visualized as "two
+words". There is currently no escape implemented to display a literal
+plus instead.
 
-Some keys are commonly recognized by Biomine utilities, for example:
+Some attributes are commonly recognized by Biomine utilities, for
+example:
 
-* `goodness`, `reliability`, `relevance`, `rarity`: Crawler results.
-* `queryname`: Name of a node in query input, e.g. matching search
-  term.
+* `goodness`, `reliability`, `relevance`, `rarity`: Biomine Crawler
+  results.
+* `queryname`: Name of a node in Biomine query input, e.g. matching
+  search term.
 * `alias`: Human-readable name of the node.
 * `queryset`: Membership in a nodeset in the query, e.g. starting
   nodes have `queryset=start` and terminal nodes have `queryset=end`).
@@ -249,26 +320,7 @@ Some keys are commonly recognized by Biomine utilities, for example:
 * `fill`: BMVis node or edge label fill color, given as `R/G/B` where
   R, G, and B are integers between 0 and 255, inclusive, giving the
   red, green, and blue color components.
-* `color`, `bgcolor`, `fontcolor`, `style`: Graphviz attributes,
-  mostly obsolete.
-* `shape`: Graphviz shape for node only, mostly obsolete.
-* `arrowhead`: Graphviz style for edge arrowhead only, mostly obsolete.
 * `label`: node or edge label for visualization.
-
-## Deprecated: Graphviz Directives
-
-Graphviz directives in BMGraph files are deprecated. The following
-section describes historical behaviour only, but new versions of
-BMGraph parsers may simply ignore these, or even produce an error.
-
-Graphviz directives are given on lines prefixed with a percent sign %.
-Everything following the percent sign is passed to GraphViz
-literally. It is not guaranteed that Graphviz will always be used as
-the back-end for visualization of BMGraph files.
-
-Example:
-
-    % node [ color=pink ];
 
 # Example BMGraph File
 
@@ -283,6 +335,8 @@ Example:
     
     # _attributes Gene_EntrezGene:5663 alias=Gene(PSEN1) queryset=start
     # _attributes Phenotype_MIM:104300 alias=Phenotype(AD) queryset=end
+
+See `example.bmg` for more complex example.
 
 # Trivia
 
