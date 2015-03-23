@@ -1,34 +1,35 @@
 # BMGraph File Format
 
 Biomine graph visualization utilities use the "bmgraph" format to
-describe graphs. This format is also output by the
-[Biomine Web interface](http://biomine.cs.helsinki.fi).  Typical file
-name extension for BMGraph files is `bmg`.
+describe graphs.  Files produced by the
+[Biomine Web interface](http://biomine.cs.helsinki.fi) also use this
+format.  A typical file name extension for BMGraph files is `bmg`.
 
-Each BMGraph file is an ASCII compatible text file consisting of
-lines.  Each line is terminated by an UNIX-style linefeed (`\n`). The
-following types of lines are allowed:
+A BMGraph file is an ASCII-encoded text file consisting of lines.
+Each line is terminated by a UNIX-style linefeed (`\n`). The following
+types of lines are allowed:
 
-1. Nodes (e.g. query starting nodes, terminal nodes)
+1. Nodes
 2. Edges
-3. Comments (some with special meaning)
+3. Comments; some of them have a special meaning
 4. Empty lines
 
 ## Nodes
 
-Nodes are given in the format `Type_DBID`. Node types begin with a
-letter (A–Z) and are followed by an underscore. The DBID part can be
-any string of ASCII letters, numbers and some punctuation
+Nodes are given in the format `Type_DBID`.  Both Type and DBID are
+mandatory.  The node type is a non-empty string starting with a letter
+(A–Z).  It is separated from the DBID by an underscore.  DBID can be
+any non-empty string of letters, numbers and some punctuation
 (e.g. periods and colons), but may not end in a colon or underscore.
-Conventionally the DBID part is formatted as Database:ID, except for
-group nodes which must not contain a colon (:) in the DBID part.  Each
+DBIDs are conventionally formatted as Database:ID, except for group
+nodes which must not contain a colon (:) in their DBIDs.  Each
 instance of the same (case-sensitive) node identifier is considered to
 refer to the same node.
 
-Node type can be arbitrary, but it is mandatory.  The following node
-types are predefined and recognized by BMVis.  BMVis uses them to
-color the nodes and automatically generate URLs to corresponding
-database records from the DBID part.
+Although node types can be arbitrary, the following predefined node
+types are recognized by BMVis.  BMVis uses them to color the nodes and
+automatically generate URLs to corresponding database records from the
+DBID part.
 
 - Node
 - Sequence
@@ -65,21 +66,21 @@ database records from the DBID part.
 - MeSHHeading
 - OMIM
 
-(Specific colors for these node types can be found from the BMVis Java
+Specific colors for these node types can be found from the BMVis Java
 source file `ColorPalette.java`.  URL link generation logic is in
-`DatabaseLinks.java`.)
+`DatabaseLinks.java`.
 
 Nodes can also have attributes given in special comments as key-value
-pairs. See under Special comments and Attributes for details.
+pairs. See Special comments and Attributes for details.
 
 ## Special Nodes
 
 Special nodes, such as query starting and terminal nodes, are placed
-at the top of the BMGraph file (before any edges). Such nodes are
-simply given alone on an otherwise empty line. These nodes will be
-considered "special" by most Biomine utilities, and will generally be
-protected from deletion due to filtering and might be shown more
-prominently in visualization than other nodes.
+at the top of the BMGraph file before any edges. Such nodes are simply
+given alone on an otherwise empty line. These nodes will be considered
+"special" by most Biomine utilities, and will generally be protected
+from deletion due to filtering and might be shown more prominently in
+visualization than the other nodes.
 
 An example of three special nodes at the top of a BMGraph file:
 
@@ -100,9 +101,9 @@ linktype for the edge:
     Node_A Node_B linktype
 
 Nodes are given in the node format described above, separated by a
-single space, and are followed by a linktype consisting of ASCII
-letters, numbers and punctuation, separated by a single space. In some
-cases the linktype may be entirely omitted, but Biomine utilities will
+single space, and are followed by a linktype consisting of letters,
+numbers and punctuation, separated by a single space. In some cases
+the linktype may be entirely omitted, but Biomine utilities will
 always output some linktype for edges, defaulting to "+" (as being the
 opposite of "-", which is also the reverse linktype of the empty
 string).
@@ -113,7 +114,7 @@ the graph.
 
 Edges can also have any number of attributes as key-value pairs. These
 are separated from each other and from the linktype by spaces and are
-given in the format `key=value`. See under Attributes for details.
+given in the format `key=value`. See Attributes for details.
 
 The edge direction information is preserved and can be visualized.
 Edge direction is indicated by the order of the nodes, so that the
@@ -146,9 +147,9 @@ An example of an edge with a single attribute:
 ## Comments and Empty Lines
 
 Comments are lines beginning with a hash `#` character followed by any
-sequence of printable ASCII characters other than a space and an
-underscore (which may be special comments, see below). Comments are
-ignored (but generally preserved) by Biomine utilities. An example:
+sequence of printable characters other than a space and an underscore
+(which may be special comments, see below). Comments are ignored (but
+generally preserved) by Biomine utilities. An example:
 
     # This is a comment.
 
@@ -296,12 +297,11 @@ edge, node attributes in special comments (due to historical reasons
 and ease of parsing).
 
 Each attribute must have some non-empty value if specified.
-Attributes may consist of ASCII letters and numbers. Values may
-consist of any printable ASCII characters, except whitespace. Some
-Biomine utilities support spaces in values by substituting them for
-the plus `+` character, e.g. `two+words` could be visualized as "two
-words". There is currently no escape implemented to display a literal
-plus instead.
+Attributes may consist of letters and numbers. Values may consist of
+any printable characters, except whitespace. Some Biomine utilities
+support spaces in values by substituting them for the plus `+`
+character, e.g. `two+words` could be visualized as "two words". There
+is currently no escape implemented to display a literal plus instead.
 
 Some attributes are commonly recognized by Biomine utilities, for
 example:
